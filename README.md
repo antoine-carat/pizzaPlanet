@@ -1,6 +1,6 @@
 # TDD Study case: Pizza Planet
 
-## What is TDD?
+## :books: What is TDD?
 
 ### "Ok, Google"
 
@@ -12,21 +12,31 @@
 2. Run all tests. The new test is expected to fail
 3. Write the code for the feature
 4. Run all tests again
-5. Refactor code (kind of optionnal but better)
+5. Refactor code (kind of optionnal but way better)
 6. Repeat
+
+![TDD Cycle](https://www.agileme.com.au/wiki/images/thumb/a/a4/Test_Driven_Development_%28TDD%29.jpg/1000px-Test_Driven_Development_%28TDD%29.jpg)
 
 ### Summary
 
 #### Advantages
 
 - Makes the developer focus on the requirements before writing the code
+- Constant refactoring = cleaner code
 
 #### Drawbacks
 
 - Needs well defined requirements
+- Can make you waste time if you refactor too much
 
-## Let's code
+## :pizza: Let's ~~eat~~ code!
 
-_The backend has been coded beforehand, we need to add a new fonctionnality now: XXX_
+_For simplicity's sake, our server will be as simple as it could be. You can list the pizzas and place an order assuming that we have infinite pizzas (Yummy)_
 
 ### Requirements
+
+Endpoints:
+
+- `GET /` Serves the frontend.
+- `GET /pizzas` List all the pizzas.
+- `POST /order` Place an order (list of pizzas)
