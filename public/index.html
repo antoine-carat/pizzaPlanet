@@ -54,15 +54,15 @@
       }
     },
     mounted() {
-      this.pizzas = [{"name":"Marguerita","ingredients":["tomato","mozarella","basil"],"vegetarian":true,"vegan":false,"price":12.5,"url":"https://img.sunset02.com/sites/default/files/styles/4_3_horizontal_-_900x675/public/image/recipes/su/10/02/pizzetta-margherita-pizza-su-x.jpg"},{"name":"Gorlami","ingredients":["tomato","mozarella","basil","salami"],"vegetarian":false,"vegan":false,"price":13,"url":"https://previews.123rf.com/images/denisenkomax/denisenkomax1511/denisenkomax151100046/48743641-delicious-fresh-salami-pizza-served-on-wooden-table-ideal-for-advertisment.jpg"},{"name":"Le French","ingredients":["tomato","garlic","camenbert","baguette"],"vegetarian":false,"vegan":false,"price":13,"url":"https://previews.123rf.com/images/denisenkomax/denisenkomax1511/denisenkomax151100046/48743641-delicious-fresh-salami-pizza-served-on-wooden-table-ideal-for-advertisment.jpg"}]
-      // axios.get('http://localhost:9292/pizzas')
-      //   .then(function (response) {
-      //     console.log(response.data)
-      //     this.pizzas = response.data
-      //   })
-      //   .catch(function (error) {
-      //     console.error(error)
-      //   })
+      // this.pizzas = [{"name":"Marguerita","ingredients":["tomato","mozarella","basil"],"vegetarian":true,"vegan":false,"price":12.5,"url":"https://img.sunset02.com/sites/default/files/styles/4_3_horizontal_-_900x675/public/image/recipes/su/10/02/pizzetta-margherita-pizza-su-x.jpg"},{"name":"Gorlami","ingredients":["tomato","mozarella","basil","salami"],"vegetarian":false,"vegan":false,"price":13,"url":"https://previews.123rf.com/images/denisenkomax/denisenkomax1511/denisenkomax151100046/48743641-delicious-fresh-salami-pizza-served-on-wooden-table-ideal-for-advertisment.jpg"},{"name":"Le French","ingredients":["tomato","garlic","camenbert","baguette"],"vegetarian":false,"vegan":false,"price":13,"url":"https://previews.123rf.com/images/denisenkomax/denisenkomax1511/denisenkomax151100046/48743641-delicious-fresh-salami-pizza-served-on-wooden-table-ideal-for-advertisment.jpg"}]
+      axios.get('http://localhost:9292/pizzas')
+        .then(function (response) {
+          console.log(response.data)
+          this.pizzas = response.data
+        })
+        .catch(function (error) {
+          console.error(error)
+        })
     },
     methods: {
       pizzas: () => {

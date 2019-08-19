@@ -1,32 +1,38 @@
 {
+  "orders": {
+    "1": {
+      "items": [],
+      "total": 0
+    }
+  },
   "pizzas": [
     {
       "name": "Marguerita",
       "ingredients": ["tomato", "mozarella", "basil"],
       "vegetarian": true,
       "vegan": false,
-      "price": 12.5,
+      "price": 12.5
     },
     {
       "name": "Burger",
       "ingredients": ["tomato", "cheddar", "pickels", "onions", "beef"],
       "vegetarian": false,
       "vegan": false,
-      "price": 14,
+      "price": 14
     },
     {
       "name": "Gorlami",
       "ingredients": ["tomato", "mozarella", "basil", "salami"],
       "vegetarian": false,
       "vegan": false,
-      "price": 13,
+      "price": 13
     },
     {
-      "name": "Le French",
-      "ingredients": ["tomato", "garlic", "camenbert", "baguette"],
+      "name": "La French Compté",
+      "ingredients": ["tomato", "garlic", "compté", "baguette"],
       "vegetarian": false,
       "vegan": false,
-      "price": 13,
+      "price": 13
     }
   ]
 }

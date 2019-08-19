@@ -16,7 +16,6 @@ class PizzaPlanetServer < Sinatra::Base
 
   get '/' do
     status 200
-    # 'Hello, world!'
     File.read(File.join('public', 'index.html'))
   end
 
@@ -24,5 +23,17 @@ class PizzaPlanetServer < Sinatra::Base
     status 200
     db = JSON.parse(File.read('db.json'))
     db['pizzas'].to_json
+  end
+
+  get '/order/:ordernumber' do
+    db = JSON.parse(File.read('db.json'))
+    order = db['orders'][params[:ordernumber]]
+    if order.nil?
+      status 404
+      'Order Not Found'
+    else
+      status 200
+      order.to_json
+    end
   end
 end
