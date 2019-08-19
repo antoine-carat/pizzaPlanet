@@ -31,12 +31,22 @@
 
 ## :pizza: Let's ~~eat~~ code!
 
-_For simplicity's sake, our server will be as simple as it could be. You can list the pizzas and place an order assuming that we have infinite pizzas (Yummy)_
-
-### Requirements
+For simplicity's sake, our server will be as simple as it could be. You can list the pizzas and place an order assuming that we have infinite pizzas (Yummy).
 
 Endpoints:
 
-- `GET /` Serves the frontend.
-- `GET /pizzas` List all the pizzas.
-- `POST /order` Place an order (list of pizzas)
+### `GET /` Serves the frontend.
+
+This endpoint has been already coded and tested.
+
+### `GET /pizzas` List all the pizzas.
+
+This endpoint should list all the different kind of pizzas available with their list of ingredients, caracteristics (veggie, vegan, ...) and price.
+
+### `POST /order` Place an order (list of pizzas).
+
+This endpoint should receive a list of pizzas and return a order number.
+
+### `GET /order/:ordernum` Retrieve a previous order.
+
+This endpoint should return the list of pizzas and the price of the previous order matching the given number.
