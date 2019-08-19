@@ -1,0 +1,35 @@
+body {
+  min-width: 90vw;
+  min-height: 90vh;
+}
+
+#app {
+  /* border: 1px solid red; */
+  width: 100%;
+}
+
+.pizzas-grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: stretch;
+  align-content: center;
+  /* border: 1px solid blue; */
+  width: 100%;
+}
+
+.pizzas-grid .pizza {
+  text-align: center;
+  border: 1px solid gray;
+  width: 30%;
+}
+
+.pizzas-grid .pizza .pizza-img {
+  width: 80%;
+}
+
+footer {
+  border-top: 1px solid gray;
+  padding-top: 2%;
+  margin-top: 5%;
+}

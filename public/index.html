@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>PizzaPlanet - To infity and beyond</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.css">
+  <link rel="stylesheet" href="main.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h1>PizzaPlanet</h1>
+  <div id="app">
+    <div v-if="stage == 'order taken'">
+      <h3>Ooohh! We are eternally grateful for that order</h3>
+      <img src="https://pngriver.com/wp-content/uploads/2018/04/Download-Toy-Story-Alien-PNG-File.png" alt="">
+    </div>
+    <div v-if="stage == 'taking order'" >
+      <h3>Our pizzas:</h3>
+      <div class="pizzas-grid">
+        <div class="pizza" v-for="pizza in pizzas">
+          <h4>{{ pizza.name }}</h4>
+          <img src="https://friendlystock.com/wp-content/uploads/2018/04/43-cut-in-half-pizza-emoji-cartoon-clipart.jpg" alt="">
+          <p>{{ pizza.ingredients.join(', ') }}</p>
+          <a class="button" href="#" @click="addToBasket(pizza)">Add to your basket</a>
+          <em>{{ pizza.price }}€</em>
+          <p><em></em></p>
+        </div>
+      </div>
+    </div>
+    <div class="basket">
+      <h3>Your basket:</h3>
+      <ul>
+        <li v-for="item in basket.items">{{ item.name }}</li>
+      </ul>
+      <p class="total">{{ basket.total }}</p>
+    </div>
+  </div>
+  <footer>
+      <em>We're not flying, we're falling with style! (c) PizzaPlanet 2019</em>
+  </footer>
+</body>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      stage: 'taking order',
+      pizzas: [],
+      basket: {
+        items: [],
+        total: 0.0
+      }
+    },
+    mounted() {
+      this.pizzas = [{"name":"Marguerita","ingredients":["tomato","mozarella","basil"],"vegetarian":true,"vegan":false,"price":12.5,"url":"https://img.sunset02.com/sites/default/files/styles/4_3_horizontal_-_900x675/public/image/recipes/su/10/02/pizzetta-margherita-pizza-su-x.jpg"},{"name":"Gorlami","ingredients":["tomato","mozarella","basil","salami"],"vegetarian":false,"vegan":false,"price":13,"url":"https://previews.123rf.com/images/denisenkomax/denisenkomax1511/denisenkomax151100046/48743641-delicious-fresh-salami-pizza-served-on-wooden-table-ideal-for-advertisment.jpg"},{"name":"Le French","ingredients":["tomato","garlic","camenbert","baguette"],"vegetarian":false,"vegan":false,"price":13,"url":"https://previews.123rf.com/images/denisenkomax/denisenkomax1511/denisenkomax151100046/48743641-delicious-fresh-salami-pizza-served-on-wooden-table-ideal-for-advertisment.jpg"}]
+      // axios.get('http://localhost:9292/pizzas')
+      //   .then(function (response) {
+      //     console.log(response.data)
+      //     this.pizzas = response.data
+      //   })
+      //   .catch(function (error) {
+      //     console.error(error)
+      //   })
+    },
+    methods: {
+      pizzas: () => {
+        axios.get('http://localhost:9292/pizzas')
+        .then(function (response) {
+          console.log(response.data)
+          return response.data
+        })
+        .catch(function (error) {
+          console.error(error)
+        })
+      },
+      addToBasket(pizza) {
+        this.basket.items.push(pizza)
+        this.basket.total += pizza.price
+        console.log(this.basket)
+      }
+    }
+  })
+</script>
+</html>
