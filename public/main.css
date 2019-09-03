@@ -6,26 +6,59 @@ body {
 #app {
   /* border: 1px solid red; */
   width: 100%;
+  /* display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: stretch;
+  align-content: center; */
+  /* border: 1px solid blue; */
 }
 
-.pizzas-grid {
+.row {
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.main-container {
+  /* border: 1px solid blue; */
+}
+
+.main-container .pizzas-grid {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
   align-items: stretch;
   align-content: center;
-  /* border: 1px solid blue; */
   width: 100%;
 }
 
-.pizzas-grid .pizza {
+.main-container .pizzas-grid .pizza {
   text-align: center;
   border: 1px solid gray;
-  width: 30%;
+  width: 45%;
+  margin-bottom: 3%;
 }
 
-.pizzas-grid .pizza .pizza-img {
-  width: 80%;
+.main-container .pizzas-grid .pizza .pizzas-title.veggie::after {
+  content: 'V';
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50rem;
+  background: green;
+}
+
+.main-container .pizzas-grid .pizza .pizza-img {
+  width: 100px;
+  height: 100px;
+}
+
+.main-container .pizzas-grid .pizza .button {
+  width: 90%;
+}
+
+.basket {
+  /* width: 25%; */
+  /* border: 2px dashed black; */
 }
 
 footer {

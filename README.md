@@ -49,4 +49,4 @@ This endpoint should receive a list of pizzas and return a order number.
 
 ### `GET /order/:ordernum` Retrieve a previous order.
 
-This endpoint should return the list of pizzas and the price of the previous order matching the given number.
+This endpoint should return the order number, the list of pizzas and the price of the previous order matching the given number.

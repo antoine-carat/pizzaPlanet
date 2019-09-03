@@ -7,35 +7,53 @@
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.css">
   <link rel="stylesheet" href="main.css">
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="vue.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-  <h1>PizzaPlanet</h1>
-  <div id="app">
-    <div v-if="stage == 'order taken'">
-      <h3>Ooohh! We are eternally grateful for that order</h3>
-      <img src="https://pngriver.com/wp-content/uploads/2018/04/Download-Toy-Story-Alien-PNG-File.png" alt="">
-    </div>
-    <div v-if="stage == 'taking order'" >
-      <h3>Our pizzas:</h3>
-      <div class="pizzas-grid">
-        <div class="pizza" v-for="pizza in pizzas">
-          <h4>{{ pizza.name }}</h4>
-          <img src="https://friendlystock.com/wp-content/uploads/2018/04/43-cut-in-half-pizza-emoji-cartoon-clipart.jpg" alt="">
-          <p>{{ pizza.ingredients.join(', ') }}</p>
-          <a class="button" href="#" @click="addToBasket(pizza)">Add to your basket</a>
-          <em>{{ pizza.price }}€</em>
-          <p><em></em></p>
+  <h1><a href="http://localhost:9292">PizzaPlanet</a></h1>
+  <div id="app" class="container">
+    <div class="row">
+      <div v-if="stage == 'landing'">
+      <a class="button" href="#" @click="changeStage('taking order')" title="Place an order">Place an order</a>
+      <a class="button" href="#" @click="changeStage('retrieving order')" title="Retrieve a previous order">Retrieve a previous order</a>        
+      </div>
+      <div v-if="stage == 'order taken' || stage == 'order summary'">
+        <h3 v-if="stage == 'order taken'">Ooohh! We are eternally grateful for that order.</h3>
+        <h4>Order N°{{ orderNumber }}</h4>
+        <ul>
+          <li v-for="(quantity, item) in order.items" :key="item">{{ item }} ({{ quantity }})</li>
+        </ul>
+        <p class="total">Total: {{ basket.total }}€</p>
+      </div>
+      <div v-if="stage == 'retrieving order'">
+          <input type="text" v-model="searchNumber">
+          <a class="button" href="#" @click="retrieveOrder()" title="Retrieve">Retrieve</a>
+      </div>
+      <div class="column main-container" v-if="stage == 'taking order'" :class="{ showBasket: 'column-75' }" >
+        <div class="float-right">
+          <a class="button" href="#" @click="toggleBasket()" title="Show basket" v-if="!showBasket">Total: {{ basket.total }}€</a>
+        </div>
+        <h3>Our pizzas:</h3>
+        <div class="pizzas-grid">
+          <div class="pizza" v-for="pizza in pizzas">
+            <h4 class="pizza-title">{{ pizza.name }}</h4>
+            <img class="pizza-img" src="https://friendlystock.com/wp-content/uploads/2018/04/43-cut-in-half-pizza-emoji-cartoon-clipart.jpg" alt="">
+            <p>{{ pizza.ingredients.join(', ') }}</p>
+            <p><em>{{ pizza.price }}€</em></p>
+            <a class="button" href="#" @click="addToBasket(pizza)">Add to your basket</a>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="basket">
-      <h3>Your basket:</h3>
-      <ul>
-        <li v-for="item in basket.items">{{ item.name }}</li>
-      </ul>
-      <p class="total">{{ basket.total }}</p>
+      <div class="column column-25 basket" v-if="showBasket">
+        <h3 v-if="stage = 'taking order'">Your basket:</h3>
+        <ul>
+          <li v-for="(quantity, item) in basket.items" :key="item">{{ item }} ({{ quantity }})</li>
+        </ul>
+        <p class="total">{{ basket.total }}</p>
+        <a class="button" href="#" @click="placeOrder()" title="Place order" v-if="stage = 'taking order'">Checkout</a>
+        <a class="button button-outline" href="#" @click="toggleBasket()" title="Hide basket" v-if="stage = 'taking order'">Hide Basket</a>
+      </div>
     </div>
   </div>
   <footer>
@@ -46,39 +64,65 @@
   var app = new Vue({
     el: '#app',
     data: {
-      stage: 'taking order',
+      stage: 'landing',
+      showBasket: false,
       pizzas: [],
       basket: {
-        items: [],
+        items: {},
         total: 0.0
-      }
+      },
+      orderNumber: '',
+      order: {},
+      searchNumber: -1
     },
     mounted() {
-      // this.pizzas = [{"name":"Marguerita","ingredients":["tomato","mozarella","basil"],"vegetarian":true,"vegan":false,"price":12.5,"url":"https://img.sunset02.com/sites/default/files/styles/4_3_horizontal_-_900x675/public/image/recipes/su/10/02/pizzetta-margherita-pizza-su-x.jpg"},{"name":"Gorlami","ingredients":["tomato","mozarella","basil","salami"],"vegetarian":false,"vegan":false,"price":13,"url":"https://previews.123rf.com/images/denisenkomax/denisenkomax1511/denisenkomax151100046/48743641-delicious-fresh-salami-pizza-served-on-wooden-table-ideal-for-advertisment.jpg"},{"name":"Le French","ingredients":["tomato","garlic","camenbert","baguette"],"vegetarian":false,"vegan":false,"price":13,"url":"https://previews.123rf.com/images/denisenkomax/denisenkomax1511/denisenkomax151100046/48743641-delicious-fresh-salami-pizza-served-on-wooden-table-ideal-for-advertisment.jpg"}]
       axios.get('http://localhost:9292/pizzas')
-        .then(function (response) {
-          console.log(response.data)
+        .then( response => {
           this.pizzas = response.data
         })
-        .catch(function (error) {
+        .catch( error => {
           console.error(error)
         })
     },
     methods: {
-      pizzas: () => {
-        axios.get('http://localhost:9292/pizzas')
-        .then(function (response) {
-          console.log(response.data)
-          return response.data
+      toggleBasket() {
+        this.showBasket = !this.showBasket
+      },
+      changeStage(stage) {
+        // Reset/set values in state transition
+        console.log(`${this.stage} -> ${stage}`)
+        this.stage = stage
+      },
+      addToBasket(pizza) {
+        if (this.basket.items[pizza.name]) {
+          this.basket.items[pizza.name] += 1
+        } else {
+          this.basket.items[pizza.name] = 1
+        }
+        this.basket.total += pizza.price
+      },
+      retrieveOrder() {
+        axios.get(`http://localhost:9292/order/${this.searchNumber}`)
+        .then( response => {
+          this.orderNumber = response.data.orderNumber
+          this.order = response.data.order
+          this.changeStage('order summary')
         })
-        .catch(function (error) {
+        .catch( error => {
           console.error(error)
         })
       },
-      addToBasket(pizza) {
-        this.basket.items.push(pizza)
-        this.basket.total += pizza.price
-        console.log(this.basket)
+      placeOrder() {
+        let data = { items: this.basket.items,
+                     total: this.basket.total }
+        console.log(data)
+        axios.post('http://localhost:9292/order', data)
+          .then( response => {
+            this.orderNumber = response.data.orderNumber
+            this.order = response.data.order
+            this.showBasket = false
+            this.changeStage('order taken')
+          })
       }
     }
   })
